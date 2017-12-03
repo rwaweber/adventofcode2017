@@ -1,7 +1,7 @@
 package days
 
 import (
-	"fmt"
+	"strconv"
 )
 
 var (
@@ -40,11 +40,34 @@ type Day1 struct {
 
 // Run satisfies the Day interface for Advent of Code problems.
 func (d *Day1) Run() string {
-	fmt.Println(Day1Prompt)
-	return string(d.Captcha())
+	return strconv.Itoa(d.Captcha())
 }
 
 // Captcha evaluates the problem defined within the prompt.
 func (d *Day1) Captcha() int {
-	return 0
+	// end result
+	var returnSum int
+	// Convert string into a list.
+	l := StringToIntList(d.Input)
+
+	// Check for cycles.
+	if l.Front().Value == l.Back().Value {
+		num, ok := l.Front().Value.(int)
+		if !ok {
+			panic("Unable to convert a Value to int")
+		}
+		returnSum += num
+	}
+
+	// Iterate through the list.
+	for e := l.Front(); e != nil && e.Next() != nil; e = e.Next() {
+		if e.Value == e.Next().Value {
+			num, ok := e.Value.(int)
+			if !ok {
+				panic("Unable to convert a Value to int")
+			}
+			returnSum += num
+		}
+	}
+	return returnSum
 }

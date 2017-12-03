@@ -13,6 +13,7 @@ func TestCaptcha(t *testing.T) {
 		{"1111", 4},
 		{"1234", 0},
 		{"91212129", 9},
+		{"8812228", 20},
 	}
 
 	for _, c := range cases {
